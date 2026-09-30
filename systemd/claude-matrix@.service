@@ -1,0 +1,15 @@
+# Claude usage on a Framework LED matrix. The instance is a /dev/serial/by-path name,
+# because both modules share one USB serial number and /dev/serial/by-id is ambiguous:
+#   cp claude-matrix@.service ~/.config/systemd/user/
+#   systemctl --user enable --now 'claude-matrix@pci-0000:c1:00.3-usb-0:3.3:1.0'
+[Unit]
+Description=Claude usage on LED matrix %i
+
+[Service]
+ExecStart=%h/.cargo/bin/claude-matrix run /dev/serial/by-path/%i
+# Unplug, suspend or a USB hiccup ends the process, just start over.
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

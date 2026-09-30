@@ -1,0 +1,15 @@
+# zeroclaw agents and gufo throughput on a Framework LED matrix. The instance is a
+# /dev/serial/by-path name, see claude-matrix@.service. Needs ~/.config/ai-matrix/zeroclaw-token.
+#   cp ai-matrix@.service ~/.config/systemd/user/
+#   systemctl --user enable --now 'ai-matrix@pci-0000:c1:00.3-usb-0:3.3:1.0'
+[Unit]
+Description=Local AI activity on LED matrix %i
+
+[Service]
+ExecStart=%h/.cargo/bin/ai-matrix /dev/serial/by-path/%i https://chat.internal.alucryd.xyz https://halogen.internal.alucryd.xyz/metrics
+# Unplug, suspend or a USB hiccup ends the process, just start over.
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,13 @@
+[package]
+name = "fw16-ledmatrix-widgets"
+version = "0.1.0"
+edition = "2024"
+description = "Status display daemons for the Framework Laptop 16 LED matrix modules"
+repository = "https://github.com/alucryd/fw16-ledmatrix-widgets"
+
+[dependencies]
+chrono = "0.4"
+serde_json = "1"
+# Only opens a known device path, so no libudev port enumeration.
+serialport = { version = "4.8", default-features = false }
+ureq = "2"
